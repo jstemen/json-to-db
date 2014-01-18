@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" href="bootstrap.css"></link>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JHU Software Development Seminar Registration</title>
+<link rel="stylesheet" href="myCss.css">
+
+<script language="JavaScript">
+	function createXMLHttpRequest() {
+		try {
+			return new XMLHttpRequest();
+		} catch (e) {
+			try {
+				return new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {
+				return new ActiveXObject("Msxml2.XMLHTTP");
+			}
+		}
+	}
+
+	function updateDateSelect() {
+		var monthSelect = document.getElementById("monthSelect");
+		var date = new Date();
+		for ( var i = 0; i < 4; i++) {
+			var month = date.getMonth();
+			var year = date.getFullYear();
+			var option = document.createElement("option");
+			option.text = month + "-" + year;
+			monthSelect.add(option, null);
+			date.setMonth(date.getMonth() - 1);
+		}
+
+	}
+
+	function saveRecords() {
+		var expenseTable = document.getElementById("expenseTable");
+		var rowCount = expenseTable.rows.length;
+		var expenseList = [];
+		for ( var i = 1; i < rowCount; i++) {
+			var row = expenseTable.rows[i];
+			var expense = convertRowToExpense(row);
+			expenseList[i] = expense;
+		}
+		//alert(expenseList);	
+
+		var selectedMonthYearStr = monthSelect.options[monthSelect.selectedIndex].text;
+		var client = createXMLHttpRequest();
+		//client.setRequestHeader('Accept', 'application/json');
+		var expenseListJson = JSON.stringify(expenseList);
+		client.open("POST", "rest/Expenses/" + selectedMonthYearStr, false);
+		client.setRequestHeader("Content-Type", "application/json");
+		client.send(expenseListJson);
+		var expenseListJson = client.responseText;
+		requestExpenseRows();
+	}
+
+	function convertRowToExpense(htmlRow) {
+		var expense = new Object();
+		expense.expense_id = getValueFromCell(htmlRow.cells[0]);
+		expense.date_bought = getValueFromCell(htmlRow.cells[1]);
+		expense.description = getValueFromCell(htmlRow.cells[2]);
+		expense.category = getValueFromCell(htmlRow.cells[3]);
+		expense.amount = getValueFromCell(htmlRow.cells[4]);
+		expense.store = getValueFromCell(htmlRow.cells[5]);
+		return expense;
+	}
+
+	function getValueFromCell(cellElement) {
+		var childNode = cellElement.childNodes[0];
+		var text;
+		
+		if(childNode.hasOwnProperty("tagName")){
+			text = childNode.value;	
+		}else{
+			text = childNode.textContent;
+		}
+		 
+		return text;
+	}
+	
+	var count =0;
+	
+	function addNewRecord() {
+		var row = expenseTable.insertRow(-1);
+		for ( var i = 0; i < 6; i++) {
+			var cellRow;
+			if(i ==0 ){
+				cellRow = '<input type=\"text\" value="' + count + '">';
+				count=count+1;
+			}else{
+				cellRow ='<input type=\"text\">';
+			}
+			row.insertCell(-1).innerHTML = cellRow;
+		}
+	}
+
+	function requestExpenseRows() {
+		var monthSelect = document.getElementById("monthSelect");
+		var selectedMonthYearStr = monthSelect.options[monthSelect.selectedIndex].text;
+		var client = createXMLHttpRequest();
+		client.open("GET", "rest/Expenses/" + selectedMonthYearStr, false);
+		client.send(null);
+		var expenseListJson = client.responseText;
+		//		alert(expenseListJson);
+
+		var expenseList = JSON.parse(expenseListJson);
+		//alert(expenseList[0].store);
+		var expenseTable = document.getElementById("expenseTable");
+		clearTable(expenseTable);
+		for ( var i = 0; i < expenseList.length; i++) {
+			var expense = expenseList[i];
+			if (expense != null && expense["expense_id"] != null &&
+					expense["store"] !=null) {
+				var row = expenseTable.insertRow(-1);
+				row.insertCell(-1).innerText = expense["expense_id"];
+				row.insertCell(-1).innerText = expense["date_bought"];
+				row.insertCell(-1).innerText = expense["description"];
+				row.insertCell(-1).innerText = expense["category"];
+				row.insertCell(-1).innerText = expense["amount"];
+				row.insertCell(-1).innerText = expense["store"];
+			}
+		}
+	}
+
+	function clearTable(expenseTable) {
+		expenseTable.innerHTML = "<thead>" + "<tr>" + "<th>expense_id</th>"
+				+ "<th>date_bought</th>" + "<th>description</th>"
+				+ "<th>category</th>" + "<th>amount</th>" + "<th>store</th>"
+				+ "</tr>" + "</thead>";
+	}
+
+	window.onload = function() {
+		updateDateSelect();
+		requestExpenseRows();
+	};
+</script>
+</head>
+<body>
+
+	<form>
+
+		<label>period</label> <select id="monthSelect"
+			onchange="requestExpenseRows()"></select>
+
+
+		<h3>Expense Table</h3>
+		<table id="expenseTable"></table>
+
+		<button type="button" onclick="addNewRecord()">New Record</button>
+		<button type="button" onclick="saveRecords()">Save Expenses</button>
+	</form>
+
+</body>
+</html>
