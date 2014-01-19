@@ -1,8 +1,13 @@
 
 package com.jaredstemen.blogspot.jsonimport;
+
 import javax.persistence.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javax.annotation.Generated;
 
@@ -12,7 +17,7 @@ public class ImportProduct {
     private String imageUrl;
     private String title;
     private String category;
-    private String isActive;
+    private int isActive;
     private String popularityIndex;
     private String itemId;
     private String parentCategory;
@@ -21,7 +26,10 @@ public class ImportProduct {
     private String brand;
     private String modifiedDate;
     private String itemHashint64;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
     public String getCreatedDate() {
         return createdDate;
@@ -55,12 +63,12 @@ public class ImportProduct {
         this.category = category;
     }
 
-    public String getIsActive() {
+    public int getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
+    public void setIsActive(int active) {
+        isActive = active;
     }
 
     public String getPopularityIndex() {
@@ -115,9 +123,17 @@ public class ImportProduct {
         return modifiedDate;
     }
 
-    public void setModifiedDate(String modifiedDate) {
+
+    /*public void setModifiedDate(String modifiedDate) {
+        //2013-02-08 10:12:11
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yy-MM-dd hh:mm:ss", Locale.ENGLISH).parse(modifiedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         this.modifiedDate = modifiedDate;
-    }
+    }*/
 
     public String getItemHashint64() {
         return itemHashint64;
@@ -127,12 +143,5 @@ public class ImportProduct {
         this.itemHashint64 = itemHashint64;
     }
 
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperties(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
 
 }

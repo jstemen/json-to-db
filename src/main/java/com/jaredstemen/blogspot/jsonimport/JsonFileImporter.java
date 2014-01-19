@@ -27,8 +27,8 @@ public class JsonFileImporter {
 
     public ImportProductHolder bindJsonToProduct(File src) throws IOException {
         ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
-        ImportProductHolder productHolder= mapper.readValue(src, ImportProductHolder.class);
-        return  productHolder;
+        ImportProductHolder productHolder = mapper.readValue(src, ImportProductHolder.class);
+        return productHolder;
     }
 
     public void convertJsonToObjAndPersist(JsonFileImporter jsonFileImporter) throws IOException {

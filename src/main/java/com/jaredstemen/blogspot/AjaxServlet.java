@@ -27,8 +27,8 @@ public class AjaxServlet extends HttpServlet {
        
 	private static final Logger LOGGER = LoggerFactory.getLogger(AjaxServlet.class);
     *//**
-     * @see HttpServlet#HttpServlet()
-     *//*
+ * @see HttpServlet#HttpServlet()
+ *//*
     public AjaxServlet() {
         super();
         LOGGER.info("Servlet has been created");
@@ -36,9 +36,9 @@ public class AjaxServlet extends HttpServlet {
     }
 
 	*//**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 *//*
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+ * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+ *//*
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.info("servlet has received get request.");
         String monthYearStr = request.getParameter(MONTH_YEAR_STR);
         List<Expense> expenses= ExpenseTable.getExpenseTable().getExpensesForMonth(monthYearStr);
@@ -51,8 +51,8 @@ public class AjaxServlet extends HttpServlet {
 	}
 
 	*//**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 *//*
+ * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+ *//*
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ObjectMapper mapper = new ObjectMapper();  
 	    Animal animal = mapper.readValue(request.getReader(), ExpenseTable.class); 

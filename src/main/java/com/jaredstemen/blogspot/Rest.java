@@ -14,10 +14,10 @@ import javax.ws.rs.core.MediaType;
 @Path("/Expenses")
 public class Rest {
 
-	private static Logger LOGGER = Logger.getLogger(Rest.class.toString());
+    private static Logger LOGGER = Logger.getLogger(Rest.class.toString());
 
 	/*@GET
-	@Path("/{monthYearStr}")
+    @Path("/{monthYearStr}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Expense> getMsg(@PathParam("monthYearStr") String monthYearStr) {
         LOGGER.info("In the get part");

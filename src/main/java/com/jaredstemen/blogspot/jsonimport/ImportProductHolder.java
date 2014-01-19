@@ -10,7 +10,8 @@ package com.jaredstemen.blogspot.jsonimport;
 public class ImportProductHolder {
     ImportProduct[] products;
 
-    public ImportProductHolder(){}
+    public ImportProductHolder() {
+    }
 
     public ImportProductHolder(ImportProduct[] products) {
         this.products = products;
