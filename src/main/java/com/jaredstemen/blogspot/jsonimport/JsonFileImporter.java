@@ -1,18 +1,17 @@
 package com.jaredstemen.blogspot.jsonimport;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonToken;
 import com.jaredstemen.blogspot.CategoryData;
 import com.jaredstemen.blogspot.Product;
 import com.jaredstemen.blogspot.repository.CategoryDataRepository;
 import com.jaredstemen.blogspot.repository.ProductRepository;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.fasterxml.jackson.core.JsonParser;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;

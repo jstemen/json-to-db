@@ -1,9 +1,14 @@
 package rest;
 
+import com.jaredstemen.blogspot.AppConfig;
 import com.jaredstemen.blogspot.CategoryData;
 import com.jaredstemen.blogspot.Product;
+import com.jaredstemen.blogspot.jsonimport.JsonFileImporter;
 import com.jaredstemen.blogspot.repository.CategoryDataRepository;
 import com.jaredstemen.blogspot.repository.ProductRepository;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,15 +20,22 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+@Component
 @Path("/")
 public class Rest {
 
     private static Logger LOGGER = Logger.getLogger(Rest.class.toString());
 
-    @Inject
-    CategoryDataRepository categoryDataRepository;
-    @Inject
-    ProductRepository productRepository;
+    public Rest(){
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        categoryDataRepository = ctx.getBean(CategoryDataRepository.class);
+        productRepository = ctx.getBean(ProductRepository.class);
+
+    }
+
+    private final CategoryDataRepository categoryDataRepository;
+
+    private  final ProductRepository productRepository;
 
 
     /*/search/category - list all categories
