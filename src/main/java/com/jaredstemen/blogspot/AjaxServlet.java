@@ -1,4 +1,5 @@
-/*package com.stemen;
+/*
+package com.jaredstemen.blogspot;
 
 import java.io.IOException;
 import java.util.Date;
@@ -16,9 +17,7 @@ import org.codehaus.jackson.map.ObjectWriter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-*//**
- * Servlet implementation class AjaxServlet
- *//*
+
 @WebServlet("/Expenses")
 public class AjaxServlet extends HttpServlet {
 	public static final String MONTH_YEAR_STR = "monthYearStr";
@@ -26,19 +25,14 @@ public class AjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private static final Logger LOGGER = LoggerFactory.getLogger(AjaxServlet.class);
-    *//**
- * @see HttpServlet#HttpServlet()
- *//*
+
     public AjaxServlet() {
         super();
         LOGGER.info("Servlet has been created");
         // TODO Auto-generated constructor stub
     }
 
-	*//**
- * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
- *//*
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.info("servlet has received get request.");
         String monthYearStr = request.getParameter(MONTH_YEAR_STR);
         List<Expense> expenses= ExpenseTable.getExpenseTable().getExpensesForMonth(monthYearStr);
@@ -50,9 +44,7 @@ public class AjaxServlet extends HttpServlet {
         response.getWriter().write(expensesJson);       // Write response body.
 	}
 
-	*//**
- * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
- *//*
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ObjectMapper mapper = new ObjectMapper();  
 	    Animal animal = mapper.readValue(request.getReader(), ExpenseTable.class); 

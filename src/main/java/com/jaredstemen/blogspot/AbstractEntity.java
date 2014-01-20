@@ -1,9 +1,6 @@
 package com.jaredstemen.blogspot;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +19,7 @@ public abstract class AbstractEntity {
     public void setId(Long id) {
         this.id = id;
     }
-
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Id
     private Long id;
 }

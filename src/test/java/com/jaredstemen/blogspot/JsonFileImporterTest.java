@@ -1,15 +1,18 @@
 package com.jaredstemen.blogspot;
 
-import com.jaredstemen.blogspot.jsonimport.ImportProductHolder;
 import com.jaredstemen.blogspot.jsonimport.JsonFileImporter;
+
+import com.jaredstemen.blogspot.repository.ProductRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.io.*;
+import java.text.ParseException;
+import java.util.List;
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,13 +29,17 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @ContextConfiguration(classes = AppConfig.class,loader = AnnotationConfigContextLoader.class)
 public class JsonFileImporterTest {
 
-    @Value("${json.file.location}")
-    private String jsonPath;
+    @Inject
+    private JsonFileImporter jsonFileImporter;
+
+    @Inject
+    private ProductRepository productRepository;
 
     @Test
-   public void testBindJsonToProduct() throws IOException {
-        JsonFileImporter jsonFileImporter = new JsonFileImporter();
-        ImportProductHolder productList = jsonFileImporter.bindJsonToProduct(new File(jsonPath));
-        assertThat(productList.getProducts().length, equalTo(10000));
+   public void testBindJsonToProduct() throws IOException, ParseException {
+        jsonFileImporter.importJsonTextFileToDb();
+        List<Product> products =  productRepository.findAll();
+
+        assertThat(products.size(), equalTo(10000));
     }
 }
