@@ -59,6 +59,26 @@ public class Rest {
         List<Product> products= productRepository.findByCategoryData_category(category);
         return products;
     }
+
+
+    @GET
+    @Path("/search/category/{category}/keyword/{word}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Product> getAllProductsWithTitleMatchingInCategory(@PathParam("category") String category,@PathParam("word") String word) {
+        LOGGER.info("In the get part");
+        List<Product> products= productRepository.findByTitleIsContainingIgnoreCaseAndCategoryData_Category(word, category);
+        return products;
+    }
+
+    @GET
+    @Path("/search/keyword/{word}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Product> getAllProductsWithTitleMatching(@PathParam("word") String word) {
+        LOGGER.info("In the get part");
+        List<Product> products= productRepository.findByTitleIsContainingIgnoreCase(word);
+        return products;
+    }
+
 /*
 	
 	@GET
