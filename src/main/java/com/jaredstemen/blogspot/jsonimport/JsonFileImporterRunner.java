@@ -7,7 +7,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.IOException;
 import java.text.ParseException;
 
-public class Runner {
+/**
+ * Run this class to extract data from the JSON file and put it in the db.
+ */
+public class JsonFileImporterRunner {
     public static void main() throws IOException, ParseException {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 

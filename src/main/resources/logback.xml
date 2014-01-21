@@ -6,11 +6,10 @@
       <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
     </layout>
   </appender>
-   
-  <logger name="com.base22" level="TRACE"/>
-   
- 
-  <root level="debug">
+
+    <logger name="com.jaredstemen.blogspot" level="DEBUG"/>
+
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

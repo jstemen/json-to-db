@@ -5,15 +5,20 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Created with IntelliJ IDEA.
- * User: jared
+ * Entity used to house all data pertaining to a product's category
+ * User: Jared Stemen
  * Date: 1/19/14
  * Time: 3:05 PM
- * To change this template use File | Settings | File Templates.
  */
 @Entity
+/**
+ *Ensure that every parent category - category relationship is unique in the db.
+ * I'm assuming that if two categories have different parent categories, then the categories themselves
+ * must be different categories.
+ */
+
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"category", "parentCategory"}))
-public class CategoryData extends AbstractEntity{
+public class CategoryData extends AbstractEntity {
     private String category;
     private String parentCategory;
 

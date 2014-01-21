@@ -20,7 +20,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * Created with IntelliJ IDEA.
- * User: jared
+ * User: Jared Stemen
  * Date: 1/18/14
  * Time: 2:33 PM
  * To change this template use File | Settings | File Templates.

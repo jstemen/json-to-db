@@ -39,37 +39,37 @@
  */
 package com.jaredstemen.blogspot;
 
-import com.jaredstemen.blogspot.repository.CategoryDataRepository;
-import com.jaredstemen.blogspot.repository.ProductRepository;
+import org.glassfish.hk2.api.DynamicConfiguration;
+import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.jersey.internal.inject.Injections;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import rest.Rest;
 
-import javax.sql.DataSource;
+import javax.inject.Inject;
 
-/**
- * Spring HelloWorld Web Application configuration.
- *
- * @author Jakub Podlesak (jakub.podlesak at oracle.com)
- */
 public class MyApplication extends ResourceConfig {
 
     /**
      * Register JAX-RS application components.
      */
-    public MyApplication() {
-        register(Rest.class);
-        /*register(MyAppBinder.class);
-        register(RequestContextFilter.class);
-        register(Product.class);
-        register(CategoryDataRepository.class);
-        register(ProductRepository.class);
-        register(LocalContainerEntityManagerFactoryBean.class);
-        register(PlatformTransactionManager.class);
-        register(DataSource.class);
-        register(PropertySourcesPlaceholderConfigurer.class);*/
+    @Inject
+    public MyApplication(ServiceLocator serviceLocator) {
+
+        //Pull bean out of Spring
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        Rest rest = ctx.getBean(Rest.class);
+
+        //Link pulled out Spring bean Jersey's DI framework
+        DynamicConfiguration dc = Injections.getConfiguration(serviceLocator);
+        Injections.addBinding(
+                Injections.newBinder(rest)
+                        .to(Rest.class),
+                dc);
+
+        dc.commit();//Don't forget to commit
+
+        register(Rest.class); //Mark Rest class as an REST endpoint to Jersey
     }
 }

@@ -5,23 +5,25 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 
 /**
- * Created with IntelliJ IDEA.
- * User: jared
+ * Represents a Product
+ * User: Jared Stemen
  * Date: 1/18/14
  * Time: 7:06 PM
- * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class Product extends AbstractEntity{
+public class Product extends AbstractEntity {
 
     private Date createdDate;
     private String imageUrl;
     private String title;
-    private String  isActive;
+    //This should probably be a boolean
+    private String isActive;
     private String popularityIndex;
     private String itemId;
+    //This should be an object because it is likely shared across many products
     private String department;
     private String upc;
+    //This should be an object because it is likely shared across many products
     private String brand;
     private Date modifiedDate;
     private String itemHashint64;
