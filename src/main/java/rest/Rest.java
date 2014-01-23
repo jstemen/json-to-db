@@ -29,7 +29,7 @@ public class Rest {
     private final ProductRepository productRepository;
 
     //In a more robust app, we shouldn't access Data directly via the repositories.
-    //It would be better to go through a service for increased modularity.
+    //It would be better to go through a service.
     @Inject
     public Rest(CategoryDataRepository categoryDataRepository, ProductRepository productRepository) {
         this.categoryDataRepository = categoryDataRepository;

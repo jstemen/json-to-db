@@ -8,3 +8,7 @@ mvn install exec:java -Dexec.mainClass=com.jaredstemen.blogspot.jsonimport.JsonF
 
 Start up the web server with:
 mvn jetty:run
+
+Checkout the Rest class for a list of available REST endpoints.
+
+Use Chrome's Postman, or some other REST client, to test it out.

@@ -56,6 +56,7 @@ public class MyApplication extends ResourceConfig {
      */
     @Inject
     public MyApplication(ServiceLocator serviceLocator) {
+        //ToDo: find a way to have Jersey better interface with Spring
 
         //Pull bean out of Spring
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
